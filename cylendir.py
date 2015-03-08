@@ -1,38 +1,34 @@
 #
-# Simple Ellipsoidal galaxy characterized by hieght, width and length.
+# Model a spiral galaxy   
 #
+# This code is derived (read shamelessly cribbed) from Heather Arneson's matlab
+# 3D plot of a spiral galaxy
+#
+
 import sys, math, pygame, random
 
 from star import star3D
 
-star_colors = \
-  [
-  (255, 255, 255), # white
-  (255, 255, 255), # white
-  (255, 255, 255), # white
-  (255, 255, 255), # white
-  (199, 189, 50),  # yellow
-  (143, 50,  13)  # red
-  ]
+def sign(x):
+    if x < 0:
+        return -1
+    return 1    
 
+class spiral:
 
+    def __init__(self, r, alpha):
 
-class ellipsoid:
-
-    def __init__(self, height, length, width):
-        self.height = height
-        self.length = length
-        self.width  = width
+        self.r     = float(r)     # max radius of galaxy 
+        self.alpha = float(alpha) # max angle of spiral
 
         # will be filled once stars are calculated
         self.numstars     = None
         self.starsizedist = None
 
         self.stars = [] 
-
     
     def calculate_stars(self, numstars = 1000, starsizedist = [1]):
-        """ Calculate random locations for stars within the Ellipsoid """
+        """ Calculate random locations for stars within the spiral """
 
         self.numstars     = numstars
         self.starsizedist = starsizedist
@@ -50,21 +46,35 @@ class ellipsoid:
 
     def generate_random_star(self):
 
-        # choose two random angles
-        theta = random.random() * 360
-        sigma = random.random() * 360
+        t = self.alpha * random.random()
+        
+        s = sign(t)
+        t = abs(t)
 
-        a = random.random() * self.height
-        b = self.length
-        c = self.width
+        r = self.r * math.sqrt(t)
+        x1 = s * r * math.cos(t)
+        y1 = s * r * math.sin(t)
+        # z1 = zeros(N,1);
 
-        x = a * math.cos(theta) * math.sin(sigma) 
-        y = b * math.sin(theta) * math.sin(sigma) 
-        z = c * math.cos(sigma) 
+        # create a sphere
+        theta = random.random() * 360.
+        phi   = random.random() * 360.
 
-        starsize = random.choice(self.starsizedist)
+        rho = r
+        x0 = rho * math.cos(theta) * math.sin(phi)
+        y0 = rho * math.sin(theta) * math.sin(phi)
+        z0 = rho * math.cos(phi);
 
-        return star3D(x,y,z, color=random.choice(star_colors), size=starsize)
+        # combine spiral and sphere to create spiral galaxy
+        # with dense cloud at center
+        alpha   = (1. + math.cos(math.pi*r/(r)))/3.;
+        alpha_z = (1. + math.cos(math.pi*r/(r)))/6.;
+
+        x = alpha * x0 + (1.-alpha) * x1;
+        y = alpha * y0 + (1.-alpha) * y1;
+        z = alpha_z * z0;
+
+        return star3D(x1,y1,z0)
 
     def displayXYZ(self, angleX, angleY, angleZ, viewer_x, viewer_y, distance,  screen):        
         """ Display to screen at rotation defined by XYZ """

@@ -9,6 +9,7 @@ TODO:
 import sys, math, pygame, random
 
 from ellipsoid import ellipsoid
+from spiral    import spiral   
 
 from pygame.locals import *
 
@@ -23,8 +24,14 @@ class Simulation:
         
         self.clock = pygame.time.Clock()
 
-        self.ellipse = ellipsoid(4, 40, 40) 
-        self.ellipse.calculate_stars(numstars=1000)
+        self.spiral = spiral(20, 3 * math.pi) 
+        self.spiral.calculate_stars(numstars=2000)
+
+        #self.ellipse_disc = ellipsoid(4, 40, 40) 
+        #self.ellipse_disc.calculate_stars(numstars=2000)
+
+        self.ellipse_bulge = ellipsoid(20, 20, 10) 
+        self.ellipse_bulge.calculate_stars(numstars=2000)
 
         self.angleX, self.angleY, self.angleZ = 0, 0, 0
         
@@ -48,19 +55,23 @@ class Simulation:
 
             keystate = pygame.key.get_pressed()
             if keystate[K_a]:
-                viewer_d += .2 
+                viewer_d += .6 
             elif keystate[K_z]:
-                viewer_d -= .2
+                viewer_d -= .6
             elif keystate[K_LEFT]:
-                viewer_x -= .2
+                viewer_x -= .6
             elif keystate[K_RIGHT]:
-                viewer_x += .2
+                viewer_x += .6
             elif keystate[K_UP]:
-                viewer_y += .2
+                viewer_y += .6
             elif keystate[K_DOWN]:
-                viewer_y -= .2
+                viewer_y -= .6
 
-            self.ellipse.displayXYZ(self.angleX, self.angleY, self.angleZ,
+            self.spiral.displayXYZ(self.angleX, self.angleY, self.angleZ,
+                                    viewer_x, viewer_y, viewer_d, self.screen) 
+            #self.ellipse_disc.displayXYZ(self.angleX, self.angleY, self.angleZ,
+            #                        viewer_x, viewer_y, viewer_d, self.screen) 
+            self.ellipse_bulge.displayXYZ(self.angleX, self.angleY, self.angleZ,
                                     viewer_x, viewer_y, viewer_d, self.screen) 
 
             # Right now just continuously rotate
