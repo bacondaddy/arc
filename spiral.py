@@ -75,7 +75,18 @@ class spiral:
         y = alpha * y0 + (1.-alpha) * y1;
         z = alpha_z * z0;
 
-        return star3D(x, y, z)
+        # introduce some random fuzz so it doesn't conform to a perfect
+        # spiral 
+        fuzz_factor = .15 # 15%
+        x = x + (random.random() * (x*fuzz_factor)) 
+        y = y + (random.random() * (y*fuzz_factor)) 
+        z = z + (random.random() * (z*fuzz_factor)) 
+
+
+
+        starsize = random.choice(self.starsizedist)
+
+        return star3D(x, y, z, size=starsize)
 
     def displayXYZ(self, angleX, angleY, angleZ, viewer_x, viewer_y, distance,  screen):        
         """ Display to screen at rotation defined by XYZ """

@@ -62,6 +62,13 @@ class ellipsoid:
         y = b * math.sin(theta) * math.sin(sigma) 
         z = c * math.cos(sigma) 
 
+        # introduce some random fuzz so it doesn't conform to a perfect
+        # ellipsoid 
+        fuzz_factor = .25 # 25%
+        x = x + (random.random() * (x*fuzz_factor)) 
+        y = y + (random.random() * (y*fuzz_factor)) 
+        z = z + (random.random() * (z*fuzz_factor)) 
+
         starsize = random.choice(self.starsizedist)
 
         return star3D(x,y,z, color=random.choice(star_colors), size=starsize)

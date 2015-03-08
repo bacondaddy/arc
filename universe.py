@@ -25,13 +25,13 @@ class Simulation:
         self.clock = pygame.time.Clock()
 
         self.spiral = spiral(20, 3 * math.pi) 
-        self.spiral.calculate_stars(numstars=2000)
+        self.spiral.calculate_stars(numstars=2000, starsizedist=[1,1,1,2,3])
 
         #self.ellipse_disc = ellipsoid(4, 40, 40) 
         #self.ellipse_disc.calculate_stars(numstars=2000)
 
         self.ellipse_bulge = ellipsoid(20, 20, 10) 
-        self.ellipse_bulge.calculate_stars(numstars=2000)
+        self.ellipse_bulge.calculate_stars(numstars=2000, starsizedist=[1,1,1,2,3])
 
         self.angleX, self.angleY, self.angleZ = 0, 0, 0
         
