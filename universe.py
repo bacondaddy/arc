@@ -14,6 +14,7 @@ from spiral    import spiral
 
 from pygame.locals import *
 
+sizes = [1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,3,3,1,1,1,1,1,1,1,5]
 
 class Simulation:
 
@@ -25,8 +26,12 @@ class Simulation:
         
         self.clock = pygame.time.Clock()
 
-        self.spiral = spiral(20, 3 * math.pi, 4) 
-        self.spiral.calculate_stars(numstars=8000, starsizedist=[1,1,1,2,3])
+        # make a large starfield
+        self.starfield = ellipsoid(60,60,60)
+        self.starfield.calculate_stars(numstars=100, starsizedist=sizes)
+
+        self.spiral = spiral(20, 3 * math.pi, 8)
+        self.spiral.calculate_stars(numstars=8000, starsizedist=sizes)
 
         #self.ellipse_disc = ellipsoid(4, 40, 40) 
         #self.ellipse_disc.calculate_stars(numstars=2000)
@@ -69,6 +74,8 @@ class Simulation:
                 viewer_y -= .6
 
             self.spiral.displayXYZ(self.angleX, self.angleY, self.angleZ,
+                                    viewer_x, viewer_y, viewer_d, self.screen) 
+            self.starfield.displayXYZ(self.angleX, self.angleY, self.angleZ,
                                     viewer_x, viewer_y, viewer_d, self.screen) 
             #self.ellipse_disc.displayXYZ(self.angleX, self.angleY, self.angleZ,
             #                        viewer_x, viewer_y, viewer_d, self.screen) 

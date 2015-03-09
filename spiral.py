@@ -103,7 +103,6 @@ class spiral:
         return star.rotateZ(angle)
 
 
-
     def displayXYZ(self, angleX, angleY, angleZ, viewer_x, viewer_y, distance,  screen):        
         """ Display to screen at rotation defined by XYZ """
         for star in self.stars:
