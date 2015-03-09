@@ -25,14 +25,14 @@ class Simulation:
         
         self.clock = pygame.time.Clock()
 
-        self.spiral = spiral(20, 3 * math.pi) 
-        self.spiral.calculate_stars(numstars=2000, starsizedist=[1,1,1,2,3])
+        self.spiral = spiral(20, 3 * math.pi, 4) 
+        self.spiral.calculate_stars(numstars=8000, starsizedist=[1,1,1,2,3])
 
         #self.ellipse_disc = ellipsoid(4, 40, 40) 
         #self.ellipse_disc.calculate_stars(numstars=2000)
 
-        self.ellipse_bulge = ellipsoid(20, 20, 10) 
-        self.ellipse_bulge.calculate_stars(numstars=2000, starsizedist=[1,1,1,2,3])
+        #self.ellipse_bulge = ellipsoid(20, 20, 10) 
+        #self.ellipse_bulge.calculate_stars(numstars=1000, starsizedist=[1,1,1,2,3])
 
         self.angleX, self.angleY, self.angleZ = 0, 0, 0
         
@@ -72,8 +72,8 @@ class Simulation:
                                     viewer_x, viewer_y, viewer_d, self.screen) 
             #self.ellipse_disc.displayXYZ(self.angleX, self.angleY, self.angleZ,
             #                        viewer_x, viewer_y, viewer_d, self.screen) 
-            self.ellipse_bulge.displayXYZ(self.angleX, self.angleY, self.angleZ,
-                                    viewer_x, viewer_y, viewer_d, self.screen) 
+            #self.ellipse_bulge.displayXYZ(self.angleX, self.angleY, self.angleZ,
+            #                        viewer_x, viewer_y, viewer_d, self.screen) 
 
             # Right now just continuously rotate
             self.angleX += 1

@@ -4,6 +4,13 @@
 # This code is derived (read shamelessly cribbed) from Heather Arneson's matlab
 # 3D plot of a spiral galaxy
 #
+# Galaxies are defined by:
+#
+# r     = the Max radius of the galaxy 
+# alpha = the max angle of the spiral
+# arms  = the number of spiraling arms (must be an even number)
+#
+#
 
 import sys, math, pygame, random
 
@@ -16,10 +23,13 @@ def sign(x):
 
 class spiral:
 
-    def __init__(self, r, alpha):
+    def __init__(self, r, alpha, arms=2):
 
         self.r     = float(r)     # max radius of galaxy 
         self.alpha = float(alpha) # max angle of spiral
+        self.arms  = arms         # number of arms
+                                  # TODO : should check that it's an even
+                                  # number
 
         # will be filled once stars are calculated
         self.numstars     = None
@@ -55,7 +65,6 @@ class spiral:
         r = self.r * math.sqrt(t)
         x1 = s * r * math.cos(t)
         y1 = s * r * math.sin(t)
-        # z1 = zeros(N,1);
 
         # create a sphere
         theta = random.random() * 360.
@@ -69,7 +78,7 @@ class spiral:
         # combine spiral and sphere to create spiral galaxy
         # with dense cloud at center
         alpha   = (1. + math.cos(math.pi*r/(self.r)))/3.;
-        alpha_z = (1. + math.cos(math.pi*r/(self.r)))/6.;
+        alpha_z = (1. + math.cos(math.pi*r/(self.r)))/3.;
 
         x = alpha * x0 + (1.-alpha) * x1;
         y = alpha * y0 + (1.-alpha) * y1;
@@ -77,16 +86,23 @@ class spiral:
 
         # introduce some random fuzz so it doesn't conform to a perfect
         # spiral 
-        fuzz_factor = .15 # 15%
+        fuzz_factor = .05 # 5%
         x = x + (random.random() * (x*fuzz_factor)) 
         y = y + (random.random() * (y*fuzz_factor)) 
         z = z + (random.random() * (z*fuzz_factor)) 
 
-
-
         starsize = random.choice(self.starsizedist)
 
-        return star3D(x, y, z, size=starsize)
+        star = star3D(x, y, z, size=starsize)
+
+        if self.arms == 2:
+            return star
+
+        # choose a random arm pair
+        angle = (360 / self.arms) * int(random.random() * self.arms)
+        return star.rotateZ(angle)
+
+
 
     def displayXYZ(self, angleX, angleY, angleZ, viewer_x, viewer_y, distance,  screen):        
         """ Display to screen at rotation defined by XYZ """
