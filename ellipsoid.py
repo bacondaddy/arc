@@ -64,7 +64,7 @@ class ellipsoid:
 
         # introduce some random fuzz so it doesn't conform to a perfect
         # ellipsoid 
-        fuzz_factor = .25 # 25%
+        fuzz_factor = .45 # 25%
         x = x + (random.random() * (x*fuzz_factor)) 
         y = y + (random.random() * (y*fuzz_factor)) 
         z = z + (random.random() * (z*fuzz_factor)) 
