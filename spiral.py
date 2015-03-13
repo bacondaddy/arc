@@ -13,6 +13,7 @@
 #
 
 import sys, math, pygame, random
+import stargfx
 
 from star import star3D
 
@@ -36,6 +37,9 @@ class spiral:
         self.starsizedist = None
 
         self.stars = [] 
+
+        sgfx = stargfx.stargfx()
+        self.star_billboard = sgfx.generate_row((255, 255, 255))
     
     def calculate_stars(self, numstars = 1000, starsizedist = [1]):
         """ Calculate random locations for stars within the spiral """
@@ -113,4 +117,5 @@ class spiral:
                           viewer_x, viewer_y, distance)
 
             # draw to screen 
-            pygame.draw.circle(screen, p.color,(int(p.x), int(p.y)), p.size)
+            #pygame.draw.circle(screen, p.color,(int(p.x), int(p.y)), p.size)
+            screen.blit(self.star_billboard[p.size], (int(p.x), int(p.y)) )

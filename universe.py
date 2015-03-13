@@ -14,7 +14,7 @@ from spiral    import spiral
 
 from pygame.locals import *
 
-sizes = [1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,3,3,1,1,1,1,1,1,1,5]
+sizes = [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,2,2,0,0,0,0,0,0,0]
 
 class Simulation:
 
