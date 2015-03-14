@@ -16,17 +16,20 @@ import uconfig
 
 from pygame.locals import *
 
-sizes = [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,2,2,0,0,0,0,0,0,0]
+#sizes = [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,2,2,0,0,0,0,0,0,0]
+sizes = uconfig.opts["star-size-dist"]
 
 class Simulation:
 
-    def __init__(self, win_width = 640, win_height = 480):
+    def __init__(self, win_width = 1024, win_height = 768):
 
         pygame.init()
 
         self.screen = pygame.display.set_mode((win_width, win_height))
         
         self.clock = pygame.time.Clock()
+
+        self.font = pygame.font.SysFont("monospace", 15)
 
         # make a large starfield
         #self.starfield = ellipsoid(60,60,60)
@@ -46,6 +49,11 @@ class Simulation:
         self.angleX = uconfig.opts["viewer-angle-x"]
         self.angleY = uconfig.opts["viewer-angle-y"]
         self.angleZ = uconfig.opts["viewer-angle-z"]
+
+    def display_text(self, string, row, color=(0,255,0)): 
+        label = self.font.render(string, 1, color) 
+        self.screen.blit(label, (700, 10 + (17*row)))
+
         
     def run(self):
         """ Main Loop """
@@ -56,6 +64,8 @@ class Simulation:
         viewer_y = uconfig.opts["viewer-y"] 
 
         viewer_rotate = uconfig.opts["viewer-auto-rotate"]
+
+        pause = 0 
 
         while 1:
             for event in pygame.event.get():
@@ -69,10 +79,22 @@ class Simulation:
             #  using the "a" and "z" keys
 
             keystate = pygame.key.get_pressed()
-            if keystate[K_a]:
+            if keystate[K_e]:
                 viewer_d += .6 
-            elif keystate[K_z]:
+            elif keystate[K_r]:
                 viewer_d -= .6
+            elif keystate[K_q]:
+                self.angleX +=1 
+            elif keystate[K_w]:
+                self.angleX -=1 
+            elif keystate[K_a]:
+                self.angleY +=1 
+            elif keystate[K_s]:
+                self.angleY -=1 
+            elif keystate[K_z]:
+                self.angleZ +=1 
+            elif keystate[K_x]:
+                self.angleZ -=1 
             elif keystate[K_LEFT]:
                 viewer_x -= .6
             elif keystate[K_RIGHT]:
@@ -81,6 +103,9 @@ class Simulation:
                 viewer_y += .6
             elif keystate[K_DOWN]:
                 viewer_y -= .6
+            elif keystate[K_p]:
+                pause = pause ^ 1 # toggle pause
+
 
             self.spiral.displayXYZ(self.angleX, self.angleY, self.angleZ,
                                     viewer_x, viewer_y, viewer_d, self.screen) 
@@ -91,7 +116,13 @@ class Simulation:
             #self.ellipse_bulge.displayXYZ(self.angleX, self.angleY, self.angleZ,
             #                        viewer_x, viewer_y, viewer_d, self.screen) 
 
-            if viewer_rotate:
+            self.display_text("viewer-x : %d" % viewer_x, row=0)    
+            self.display_text("viewer-y : %d" % viewer_y, row=1)    
+            self.display_text("viewer-angle-x : %d" % self.angleX, row=2)    
+            self.display_text("viewer-angle-y : %d" % self.angleY, row=3)    
+            self.display_text("viewer-angle-z : %d" % self.angleZ, row=4)    
+
+            if viewer_rotate and not pause:
                 self.angleX += 1
                 self.angleY += 1
                 self.angleZ += 1

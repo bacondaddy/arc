@@ -42,7 +42,7 @@ class spiral:
 
         if uconfig.opts["gauss-stars"]:
             sgfx = stargfx.stargfx()
-            self.star_billboard = sgfx.generate_row((255, 255, 255))
+            self.star_billboard = sgfx.generate_row((100, 100, 255))
     
     def calculate_stars(self, numstars = 1000, starsizedist = [1]):
         """ Calculate random locations for stars within the spiral """
