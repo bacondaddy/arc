@@ -32,14 +32,8 @@ class stargfx:
         for i in range(0, 32):
             for j in range(0, 32):
                 r_decay = gaussian_decay(r, size, i, j)
-                if r_decay < 30:
-                    r_decay = 0
                 g_decay = gaussian_decay(g, size, i, j)
-                if g_decay < 30:
-                    g_decay = 0
                 b_decay = gaussian_decay(b, size, i, j)
-                if b_decay < 30:
-                    b_decay = 0
                 s.set_at((i,j), (r_decay, g_decay, b_decay))
 
         return s        
