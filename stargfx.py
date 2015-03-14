@@ -6,9 +6,6 @@ from pygame.locals import *
 def gaussian_decay(A, sigma, x, y):
     """ Return the Z value along a gaussian distribution given x,y 
         coordinates"""
-    print(A,x,y)
-    g = -((pow(x-16.,2.)/(200.) + (pow(y-16.,2.)/200.)))
-    print(g, math.exp(g), A*math.exp(g))
     return A * math.exp(-((pow(x-16.,2.)/(2*pow(sigma,2)) + \
                           (pow(y-16.,2.)/(2*pow(sigma,2))))))
     
