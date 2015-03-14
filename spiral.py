@@ -40,8 +40,9 @@ class spiral:
 
         self.stars = [] 
 
-        sgfx = stargfx.stargfx()
-        self.star_billboard = sgfx.generate_row((255, 255, 255))
+        if uconfig.opts["gauss-stars"]:
+            sgfx = stargfx.stargfx()
+            self.star_billboard = sgfx.generate_row((255, 255, 255))
     
     def calculate_stars(self, numstars = 1000, starsizedist = [1]):
         """ Calculate random locations for stars within the spiral """
@@ -120,4 +121,7 @@ class spiral:
 
             # draw to screen 
             #pygame.draw.circle(screen, p.color,(int(p.x), int(p.y)), p.size)
-            screen.blit(self.star_billboard[p.size], (int(p.x), int(p.y)), special_flags = pygame.BLEND_RGB_ADD )
+            if uconfig.opts["gauss-stars"]:
+                screen.blit(self.star_billboard[p.size], (int(p.x), int(p.y)), special_flags = pygame.BLEND_RGB_ADD )
+            else:
+                pygame.draw.circle(screen, p.color,(int(p.x), int(p.y)), p.size)

@@ -55,6 +55,8 @@ class Simulation:
         viewer_x = uconfig.opts["viewer-x"] 
         viewer_y = uconfig.opts["viewer-y"] 
 
+        viewer_rotate = uconfig.opts["viewer-auto-rotate"]
+
         while 1:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -89,10 +91,10 @@ class Simulation:
             #self.ellipse_bulge.displayXYZ(self.angleX, self.angleY, self.angleZ,
             #                        viewer_x, viewer_y, viewer_d, self.screen) 
 
-            # Right now just continuously rotate
-            self.angleX += 1
-            self.angleY += 1
-            self.angleZ += 1
+            if viewer_rotate:
+                self.angleX += 1
+                self.angleY += 1
+                self.angleZ += 1
             
             pygame.display.flip()
 
