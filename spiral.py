@@ -13,6 +13,8 @@
 #
 
 import sys, math, pygame, random
+
+import uconfig
 import stargfx
 
 from star import star3D
@@ -90,7 +92,7 @@ class spiral:
 
         # introduce some random fuzz so it doesn't conform to a perfect
         # spiral 
-        fuzz_factor = .05 # 5%
+        fuzz_factor = uconfig.opts["spiral-fuzz"] 
         x = x + (random.random() * (x*fuzz_factor)) 
         y = y + (random.random() * (y*fuzz_factor)) 
         z = z + (random.random() * (z*fuzz_factor)) 

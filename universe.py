@@ -6,11 +6,13 @@ TODO:
  - give each galaxy a location in the universe
   
 """
+
 import sys, math, pygame, random
 
 from ellipsoid import ellipsoid
 from spiral    import spiral   
 
+import uconfig
 
 from pygame.locals import *
 
@@ -27,11 +29,12 @@ class Simulation:
         self.clock = pygame.time.Clock()
 
         # make a large starfield
-        self.starfield = ellipsoid(60,60,60)
-        self.starfield.calculate_stars(numstars=100, starsizedist=sizes)
+        #self.starfield = ellipsoid(60,60,60)
+        #self.starfield.calculate_stars(numstars=100, starsizedist=sizes)
 
         self.spiral = spiral(20, 3 * math.pi, 8)
-        self.spiral.calculate_stars(numstars=8000, starsizedist=sizes)
+        ns = uconfig.opts["spiral-numstars"]
+        self.spiral.calculate_stars(numstars=ns, starsizedist=sizes)
 
         #self.ellipse_disc = ellipsoid(4, 40, 40) 
         #self.ellipse_disc.calculate_stars(numstars=2000)
@@ -44,7 +47,8 @@ class Simulation:
     def run(self):
         """ Main Loop """
 
-        viewer_d = 60 
+        viewer_d = uconfig.opts["viewer-distance"]
+
         viewer_x = 0 
         viewer_y = 0 
 
@@ -75,8 +79,8 @@ class Simulation:
 
             self.spiral.displayXYZ(self.angleX, self.angleY, self.angleZ,
                                     viewer_x, viewer_y, viewer_d, self.screen) 
-            self.starfield.displayXYZ(self.angleX, self.angleY, self.angleZ,
-                                    viewer_x, viewer_y, viewer_d, self.screen) 
+            #self.starfield.displayXYZ(self.angleX, self.angleY, self.angleZ,
+            #                        viewer_x, viewer_y, viewer_d, self.screen) 
             #self.ellipse_disc.displayXYZ(self.angleX, self.angleY, self.angleZ,
             #                        viewer_x, viewer_y, viewer_d, self.screen) 
             #self.ellipse_bulge.displayXYZ(self.angleX, self.angleY, self.angleZ,
@@ -90,4 +94,5 @@ class Simulation:
             pygame.display.flip()
 
 if __name__ == "__main__":
+
     Simulation().run()
