@@ -32,7 +32,8 @@ class Simulation:
         #self.starfield = ellipsoid(60,60,60)
         #self.starfield.calculate_stars(numstars=100, starsizedist=sizes)
 
-        self.spiral = spiral(20, 3 * math.pi, 8)
+        r = uconfig.opts["spiral-diameter"]/2
+        self.spiral = spiral(r, 3 * math.pi, 8)
         ns = uconfig.opts["spiral-numstars"]
         self.spiral.calculate_stars(numstars=ns, starsizedist=sizes)
 
@@ -42,15 +43,17 @@ class Simulation:
         #self.ellipse_bulge = ellipsoid(20, 20, 10) 
         #self.ellipse_bulge.calculate_stars(numstars=1000, starsizedist=[1,1,1,2,3])
 
-        self.angleX, self.angleY, self.angleZ = 0, 0, 0
+        self.angleX = uconfig.opts["viewer-angle-x"]
+        self.angleY = uconfig.opts["viewer-angle-y"]
+        self.angleZ = uconfig.opts["viewer-angle-z"]
         
     def run(self):
         """ Main Loop """
 
         viewer_d = uconfig.opts["viewer-distance"]
 
-        viewer_x = 0 
-        viewer_y = 0 
+        viewer_x = uconfig.opts["viewer-x"] 
+        viewer_y = uconfig.opts["viewer-y"] 
 
         while 1:
             for event in pygame.event.get():
