@@ -118,4 +118,4 @@ class spiral:
 
             # draw to screen 
             #pygame.draw.circle(screen, p.color,(int(p.x), int(p.y)), p.size)
-            screen.blit(self.star_billboard[p.size], (int(p.x), int(p.y)) )
+            screen.blit(self.star_billboard[p.size], (int(p.x), int(p.y)), special_flags = pygame.BLEND_RGB_ADD )
