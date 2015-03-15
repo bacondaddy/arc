@@ -116,11 +116,12 @@ class Simulation:
             #self.ellipse_bulge.displayXYZ(self.angleX, self.angleY, self.angleZ,
             #                        viewer_x, viewer_y, viewer_d, self.screen) 
 
-            self.display_text("viewer-x : %d" % viewer_x, row=0)    
-            self.display_text("viewer-y : %d" % viewer_y, row=1)    
-            self.display_text("viewer-angle-x : %d" % self.angleX, row=2)    
-            self.display_text("viewer-angle-y : %d" % self.angleY, row=3)    
-            self.display_text("viewer-angle-z : %d" % self.angleZ, row=4)    
+            self.display_text("viewer-distance : %d" % viewer_d, row=0)    
+            self.display_text("viewer-x : %d" % viewer_x, row=1)    
+            self.display_text("viewer-y : %d" % viewer_y, row=2)    
+            self.display_text("viewer-angle-x : %d" % self.angleX, row=3)    
+            self.display_text("viewer-angle-y : %d" % self.angleY, row=4)    
+            self.display_text("viewer-angle-z : %d" % self.angleZ, row=5)    
 
             if viewer_rotate and not pause:
                 self.angleX += 1
