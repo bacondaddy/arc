@@ -11,7 +11,7 @@ opts_full = \
 
     "star-size-dist" : [0,0,0,0,0,0,1,1,1,2],
 
-    "spiral-numstars" : 100000, # number of stars used to make up the
+    "spiral-numstars" : 10000, # number of stars used to make up the
                               # spiral galaxy
     "spiral-fuzz" : .15,  # entropy to throw at spiral galaxy 
     "spiral-diameter" : 500, # 
@@ -24,7 +24,7 @@ opts_full = \
     "viewer-angle-x" : 0,
     "viewer-angle-y" : 0,
     "viewer-angle-z" : 0,
-    "viewer-distance" : 1000
+    "viewer-distance" : 800
 }
 
 opts_realtime = \
@@ -37,7 +37,7 @@ opts_realtime = \
 
     "star-size-dist" : [0,0,0,0,0,0,1,1,1,2],
 
-    "spiral-numstars" : 2000, # number of stars used to make up the
+    "spiral-numstars" : 4000, # number of stars used to make up the
                               # spiral galaxy
     "spiral-fuzz" : .15,  # entropy to throw at spiral galaxy 
     "spiral-diameter" : 40, # 
