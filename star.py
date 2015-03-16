@@ -7,6 +7,7 @@
 
 import sys, math, pygame, random
 
+from Vec3d import Vec3d
 
 class star3D:
 
@@ -26,7 +27,7 @@ class star3D:
  
     def rotateY(self, angle):
         """ Rotate the star around the Y axis by the given angle in degrees. """
-        rad = angle * math.pi / 180
+        rad = math.radians(angle)
         cosa = math.cos(rad)
         sina = math.sin(rad)
         z = self.z * cosa - self.x * sina
@@ -35,7 +36,7 @@ class star3D:
  
     def rotateZ(self, angle):
         """ Rotate the star around the Z axis by the given angle in degrees. """
-        rad = angle * math.pi / 180
+        rad = math.radians(angle)
         cosa = math.cos(rad)
         sina = math.sin(rad)
         x = self.x * cosa - self.y * sina
@@ -44,9 +45,17 @@ class star3D:
  
     def project(self, win_width, win_height, fov, viewer_x, viewer_y, viewer_d):
         """ Transforms this 3D point to 2D using a perspective projection. """
+
+        s = Vec3d(self.x, self.y, self.z)
+        v = Vec3d(viewer_x, viewer_y, viewer_d)
+        dist = s+v # distance from star to viewer
+
+        if dist.z < 0:
+            return None
+
         factor = fov / (viewer_d + self.z)
         x = (self.x+viewer_x) * factor + win_width / 2
         y = -(self.y+viewer_y) * factor + win_height / 2
-        return star3D(x, y, 1, self.color, self.size)
+        return star3D(x, y, 0, self.color, self.size)
 
 
