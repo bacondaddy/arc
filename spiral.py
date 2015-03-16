@@ -118,6 +118,8 @@ class spiral:
             # Transform the point from 3D to 2D
             p = s.project(screen.get_width(), screen.get_height(), 256,
                           viewer_x, viewer_y, distance)
+            if not p:
+                continue
 
             # draw to screen 
             #pygame.draw.circle(screen, p.color,(int(p.x), int(p.y)), p.size)
