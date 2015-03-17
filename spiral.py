@@ -124,6 +124,6 @@ class spiral:
             # draw to screen 
             #pygame.draw.circle(screen, p.color,(int(p.x), int(p.y)), p.size)
             if uconfig.opts["gauss-stars"]:
-                screen.blit(self.star_billboard[p.size], (int(p.x), int(p.y)), special_flags = pygame.BLEND_RGB_ADD )
+                screen.blit(self.star_billboard[p.size], (int(p.v.x), int(p.v.y)), special_flags = pygame.BLEND_RGB_ADD )
             else:
                 pygame.draw.circle(screen, p.color,(int(p.v.x), int(p.v.y)), p.size)
