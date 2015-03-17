@@ -9,8 +9,11 @@ TODO:
 
 import sys, math, pygame, random
 
+import uviewer
+
 from ellipsoid import ellipsoid
 from spiral    import spiral   
+from axis      import axis
 
 import uconfig
 
@@ -25,20 +28,23 @@ class Simulation:
 
         pygame.init()
 
+        # Pygame init
         self.screen = pygame.display.set_mode((win_width, win_height))
-        
         self.clock = pygame.time.Clock()
-
         self.font = pygame.font.SysFont("monospace", 15)
 
         # make a large starfield
         #self.starfield = ellipsoid(60,60,60)
         #self.starfield.calculate_stars(numstars=100, starsizedist=sizes)
 
+        self.viewer = uviewer.uviewer() 
+
         r = uconfig.opts["spiral-diameter"]/2
         self.spiral = spiral(r, 3 * math.pi, 8)
         ns = uconfig.opts["spiral-numstars"]
         self.spiral.calculate_stars(numstars=ns, starsizedist=sizes)
+
+        self.axis = axis()
 
         #self.ellipse_disc = ellipsoid(4, 40, 40) 
         #self.ellipse_disc.calculate_stars(numstars=2000)
@@ -46,9 +52,9 @@ class Simulation:
         #self.ellipse_bulge = ellipsoid(20, 20, 10) 
         #self.ellipse_bulge.calculate_stars(numstars=1000, starsizedist=[1,1,1,2,3])
 
-        self.angleX = uconfig.opts["viewer-angle-x"]
-        self.angleY = uconfig.opts["viewer-angle-y"]
-        self.angleZ = uconfig.opts["viewer-angle-z"]
+        self.angleX = uconfig.opts["obj-angle-x"]
+        self.angleY = uconfig.opts["obj-angle-y"]
+        self.angleZ = uconfig.opts["obj-angle-z"]
 
     def display_text(self, string, row, color=(0,255,0)): 
         label = self.font.render(string, 1, color) 
@@ -58,12 +64,13 @@ class Simulation:
     def run(self):
         """ Main Loop """
 
-        viewer_d = uconfig.opts["viewer-distance"]
+        self.viewer.position.x = uconfig.opts["viewer-x"] 
+        self.viewer.position.y = uconfig.opts["viewer-y"] 
+        self.viewer.position.z = uconfig.opts["viewer-z"]
 
-        viewer_x = uconfig.opts["viewer-x"] 
-        viewer_y = uconfig.opts["viewer-y"] 
+        self.viewer.direction  = uconfig.opts["viewer-dir"]
 
-        viewer_rotate = uconfig.opts["viewer-auto-rotate"]
+        viewer_rotate = uconfig.opts["obj-auto-rotate"]
 
         pause = 0 
 
@@ -80,9 +87,13 @@ class Simulation:
 
             keystate = pygame.key.get_pressed()
             if keystate[K_e]:
-                viewer_d += .6 
+                self.viewer.position.z += .6 
             elif keystate[K_r]:
-                viewer_d -= .6
+                self.viewer.position.z -= .6
+            if keystate[K_t]:
+                self.viewer.direction.x += .2 
+            elif keystate[K_y]:
+                self.viewer.direction.x -= .2
             elif keystate[K_q]:
                 self.angleX +=1 
             elif keystate[K_w]:
@@ -96,32 +107,37 @@ class Simulation:
             elif keystate[K_x]:
                 self.angleZ -=1 
             elif keystate[K_LEFT]:
-                viewer_x -= .6
+                self.viewer.position.x -= .6
             elif keystate[K_RIGHT]:
-                viewer_x += .6
+                self.viewer.position.x += .6
             elif keystate[K_UP]:
-                viewer_y += .6
+                self.viewer.position.y += .6
             elif keystate[K_DOWN]:
-                viewer_y -= .6
+                self.viewer.position.y -= .6
             elif keystate[K_p]:
                 pause = pause ^ 1 # toggle pause
 
 
             self.spiral.displayXYZ(self.angleX, self.angleY, self.angleZ,
-                                    viewer_x, viewer_y, viewer_d, self.screen) 
+                                    self.viewer, self.screen) 
+            self.axis.displayXYZ(self.angleX, self.angleY, self.angleZ,
+                                    self.viewer, self.screen) 
             #self.starfield.displayXYZ(self.angleX, self.angleY, self.angleZ,
-            #                        viewer_x, viewer_y, viewer_d, self.screen) 
+            #                        self.viewer.position.x, self.viewer.position.y, self.viewer.position.z, self.screen) 
             #self.ellipse_disc.displayXYZ(self.angleX, self.angleY, self.angleZ,
-            #                        viewer_x, viewer_y, viewer_d, self.screen) 
+            #                        self.viewer.position.x, self.viewer.position.y, self.viewer.position.z, self.screen) 
             #self.ellipse_bulge.displayXYZ(self.angleX, self.angleY, self.angleZ,
-            #                        viewer_x, viewer_y, viewer_d, self.screen) 
+            #                        self.viewer.position.x, self.viewer.position.y, self.viewer.position.z, self.screen) 
 
-            self.display_text("viewer-distance : %d" % viewer_d, row=0)    
-            self.display_text("viewer-x : %d" % viewer_x, row=1)    
-            self.display_text("viewer-y : %d" % viewer_y, row=2)    
-            self.display_text("viewer-angle-x : %d" % self.angleX, row=3)    
-            self.display_text("viewer-angle-y : %d" % self.angleY, row=4)    
-            self.display_text("viewer-angle-z : %d" % self.angleZ, row=5)    
+            self.display_text("viewer-x : %d" % self.viewer.position.x, row=0)    
+            self.display_text("viewer-y : %d" % self.viewer.position.y, row=1)    
+            self.display_text("viewer-z : %d" % self.viewer.position.z, row=2)    
+
+            self.display_text("obj-angle-x : %d" % self.angleX, row=3)    
+            self.display_text("obj-angle-y : %d" % self.angleY, row=4)    
+            self.display_text("obj-angle-z : %d" % self.angleZ, row=5)    
+
+            self.display_text("viewer-dir-x : %f" % self.viewer.direction.x, row=6)    
 
             if viewer_rotate and not pause:
                 self.angleX += 1

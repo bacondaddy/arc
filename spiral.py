@@ -110,14 +110,14 @@ class spiral:
         return star.rotateZ(angle)
 
 
-    def displayXYZ(self, angleX, angleY, angleZ, viewer_x, viewer_y, distance,  screen):        
+    def displayXYZ(self, angleX, angleY, angleZ, viewer, screen):        
         """ Display to screen at rotation defined by XYZ """
         for star in self.stars:
             # Rotate the point around X axis, then around Y axis, and finally around Z axis.
             s = star.rotateX(angleX).rotateY(angleY).rotateZ(angleZ)
             # Transform the point from 3D to 2D
             p = s.project(screen.get_width(), screen.get_height(), 256,
-                          viewer_x, viewer_y, distance)
+                          viewer)
             if not p:
                 continue
 
@@ -126,4 +126,4 @@ class spiral:
             if uconfig.opts["gauss-stars"]:
                 screen.blit(self.star_billboard[p.size], (int(p.x), int(p.y)), special_flags = pygame.BLEND_RGB_ADD )
             else:
-                pygame.draw.circle(screen, p.color,(int(p.x), int(p.y)), p.size)
+                pygame.draw.circle(screen, p.color,(int(p.v.x), int(p.v.y)), p.size)
