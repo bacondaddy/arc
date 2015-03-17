@@ -13,7 +13,6 @@ import uviewer
 
 from ellipsoid import ellipsoid
 from spiral    import spiral   
-from axis      import axis
 
 import uconfig
 
@@ -43,8 +42,6 @@ class Simulation:
         self.spiral = spiral(r, 3 * math.pi, 8)
         ns = uconfig.opts["spiral-numstars"]
         self.spiral.calculate_stars(numstars=ns, starsizedist=sizes)
-
-        self.axis = axis()
 
         #self.ellipse_disc = ellipsoid(4, 40, 40) 
         #self.ellipse_disc.calculate_stars(numstars=2000)
@@ -119,8 +116,6 @@ class Simulation:
 
 
             self.spiral.displayXYZ(self.angleX, self.angleY, self.angleZ,
-                                    self.viewer, self.screen) 
-            self.axis.displayXYZ(self.angleX, self.angleY, self.angleZ,
                                     self.viewer, self.screen) 
             #self.starfield.displayXYZ(self.angleX, self.angleY, self.angleZ,
             #                        self.viewer.position.x, self.viewer.position.y, self.viewer.position.z, self.screen) 

@@ -35,7 +35,7 @@ class axis:
 
         pygame.draw.line(screen, (255,0,0),
                          (start.v.x, start.v.y),
-                         (end.v.x, end.v.y))
+                         (end.v.x, end.v.y), 3)
 
         # Y axis
         start = self.y_start.rotateX(angleX).rotateY(angleY).rotateZ(angleZ)
@@ -47,7 +47,7 @@ class axis:
 
         pygame.draw.line(screen, (0,255,0),
                          (start.v.x, start.v.y),
-                         (end.v.x, end.v.y))
+                         (end.v.x, end.v.y), 3)
 
         # Z axis
         start = self.z_start.rotateX(angleX).rotateY(angleY).rotateZ(angleZ)

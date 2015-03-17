@@ -19,6 +19,7 @@ opts_full = \
     "spiral-fuzz" : .15,  # entropy to throw at spiral galaxy 
     "spiral-diameter" : 500, # 
 
+    "obj-axis-show" : 0, # show 3D axis with object
 
     "obj-auto-rotate" : 0, # rotate the object 
 
@@ -49,6 +50,8 @@ opts_realtime = \
     "spiral-diameter" : 40, # 
 
     "obj-auto-rotate" : 0, # rotate the object 
+
+    "obj-axis-show" : 1, # show 3D axis with object
 
     "viewer-x": 0,  # x position of the viewer 
     "viewer-y": 0,  # y position of the viewer
