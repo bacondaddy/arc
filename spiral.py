@@ -14,6 +14,8 @@
 
 import sys, math, pygame, random
 
+from Vec3d import Vec3d
+
 import uconfig
 import stargfx
 
@@ -100,7 +102,7 @@ class spiral:
 
         starsize = random.choice(self.starsizedist)
 
-        star = star3D(x, y, z, size=starsize)
+        star = star3D(Vec3d(x, y, z), size=starsize)
 
         if self.arms == 2:
             return star

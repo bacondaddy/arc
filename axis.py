@@ -3,17 +3,19 @@ import pygame
 
 from star import star3D 
 
+from Vec3d import Vec3d
+
 class axis:
 
     def __init__(self):
-        self.x_start = star3D(0,0,0)
-        self.x_end   = star3D(10,0,0)
+        self.x_start = star3D(Vec3d(0,0,0))
+        self.x_end   = star3D(Vec3d(10,0,0))
 
-        self.y_start = star3D(0,0,0)
-        self.y_end   = star3D(0,10,0)
+        self.y_start = star3D(Vec3d(0,0,0))
+        self.y_end   = star3D(Vec3d(0,10,0))
 
-        self.z_start = star3D(0,0,0)
-        self.z_end   = star3D(0,0,10)
+        self.z_start = star3D(Vec3d(0,0,0))
+        self.z_end   = star3D(Vec3d(0,0,10))
 
         
 
