@@ -46,8 +46,14 @@ class star3D:
     def project(self, win_width, win_height, fov, viewer_x, viewer_y, viewer_d):
         """ Transforms this 3D point to 2D using a perspective projection. """
 
+        # The following chunc of code determines whether the star is
+        # outside of the viewers scope by simplistically determining if
+        # it is behind the viewer, in which case, it doesn't project the
+        # star
         s = Vec3d(self.x, self.y, self.z)
         v = Vec3d(viewer_x, viewer_y, viewer_d)
+        # Note the the viewer is viewer_d along the z axes and looking
+        # back (0,0,-1) therefore we use S+V to find the distance
         dist = s+v # distance from star to viewer
 
         if dist.z < 0:
@@ -57,5 +63,4 @@ class star3D:
         x = (self.x+viewer_x) * factor + win_width / 2
         y = -(self.y+viewer_y) * factor + win_height / 2
         return star3D(x, y, 0, self.color, self.size)
-
 
