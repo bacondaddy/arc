@@ -36,7 +36,8 @@ class Simulation:
         #self.starfield = ellipsoid(60,60,60)
         #self.starfield.calculate_stars(numstars=100, starsizedist=sizes)
 
-        self.viewer = uviewer.uviewer() 
+        self.viewer = uviewer.uviewer(screen_width=win_width,
+                                      screen_height=win_height) 
 
         r = uconfig.opts["spiral-diameter"]/2
         self.spiral = spiral(r, 3 * math.pi, 8)
@@ -117,6 +118,8 @@ class Simulation:
 
             self.spiral.displayXYZ(self.angleX, self.angleY, self.angleZ,
                                     self.viewer, self.screen) 
+            self.viewer.displayXYZ(0, 0, 0, self.viewer, self.screen) 
+                                    
             #self.starfield.displayXYZ(self.angleX, self.angleY, self.angleZ,
             #                        self.viewer.position.x, self.viewer.position.y, self.viewer.position.z, self.screen) 
             #self.ellipse_disc.displayXYZ(self.angleX, self.angleY, self.angleZ,

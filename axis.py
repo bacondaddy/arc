@@ -7,18 +7,17 @@ from Vec3d import Vec3d
 
 class axis:
 
-    def __init__(self):
-        self.x_start = star3D(Vec3d(0,0,0))
-        self.x_end   = star3D(Vec3d(10,0,0))
+    def __init__(self, pos = Vec3d(0,0,0)):
+        self.x_start = star3D(pos)
+        self.x_end   = star3D(Vec3d(pos.x+10,pos.y,pos.z))
 
-        self.y_start = star3D(Vec3d(0,0,0))
-        self.y_end   = star3D(Vec3d(0,10,0))
+        self.y_start = star3D(pos)
+        self.y_end   = star3D(Vec3d(pos.x, pos.y+10, pos.z))
 
-        self.z_start = star3D(Vec3d(0,0,0))
-        self.z_end   = star3D(Vec3d(0,0,10))
+        self.z_start = star3D(pos)
+        self.z_end   = star3D(Vec3d(pos.x, pos.y, pos.z+10))
 
         
-
     def displayXYZ(self, angleX, angleY, angleZ, viewer, screen):        
         """ Display to screen at rotation defined by XYZ """
 
