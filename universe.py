@@ -41,7 +41,7 @@ class Simulation:
                                       screen_height=win_height) 
 
         r = uconfig.opts["spiral-diameter"]/2
-        self.spiral  = spiral(Vec3d(0,70,0), r, 3 * math.pi, 8)
+        self.spiral  = spiral(Vec3d(0,0,0), r, 3 * math.pi, 8)
         #self.spiral2 = spiral(Vec3d(-70,-70,0), 1.3*r, 3 * math.pi, 4)
         ns = uconfig.opts["spiral-numstars"]
         self.spiral. calculate_stars(numstars=ns, starsizedist=sizes)
