@@ -134,4 +134,5 @@ class spiral:
             else:
                 pygame.draw.circle(screen, p.color,(int(p.v.x), int(p.v.y)), p.size)
         # --
-        self.axis.displayXYZ(angleX, angleY, angleZ, viewer, screen) 
+        if uconfig.opts["obj-axis-show"]:
+            self.axis.displayXYZ(angleX, angleY, angleZ, viewer, screen) 
