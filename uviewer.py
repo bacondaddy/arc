@@ -22,7 +22,9 @@ class uviewer:
     def displayXYZ(self, angleX, angleY, angleZ, viewer, screen):        
         # Create a reference coordinate axis for the universe based on the
         # viewers position.  
-        self.universe_axis = axis(Vec3d(self.position.x - 50,
-                                        self.position.y + 50,
-                                        self.position.z - 50));
-        self.universe_axis.displayXYZ(angleX, angleY, angleZ, viewer, screen) 
+        self.universe_axis = axis(Vec3d(- self.position.x-140,
+                                        - self.position.y+120,
+                                          self.position.z-100),
+                                          show_coords = True);
+
+        self.universe_axis.displayXYZ(angleX, angleY, angleZ, self, screen)
