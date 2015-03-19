@@ -27,7 +27,7 @@ class star3D:
         """ Rotate the star around the Z axis by the given angle in degrees. """
         return star3D(self.v.rotated_around_z(angle), self.color, self.size)
  
-    def project(self, win_width, win_height, fov, viewer):
+    def project(self, win_width, win_height, galaxy_pos, fov, viewer):
         """ Transforms this 3D point to 2D using a perspective projection. """
 
         # The following chunc of code determines whether the star is
@@ -42,11 +42,11 @@ class star3D:
         if dist.z > 0:
             return None
 
-        if (viewer.position.z - self.v.z) == 0:
+        if ((viewer.position.z - self.v.z) + galaxy_pos.z) == 0:
             factor = 0
         else:    
-            factor = fov / (viewer.position.z - self.v.z)
-        x = (self.v.x+viewer.position.x) * factor + win_width / 2
-        y = -(self.v.y+viewer.position.y) * factor + win_height / 2
+            factor = fov / ((viewer.position.z - self.v.z) + galaxy_pos.z)
+        x = (self.v.x+galaxy_pos.x+viewer.position.x) * factor + win_width / 2
+        y = -(self.v.y+galaxy_pos.y+viewer.position.y) * factor + win_height / 2
         return star3D(Vec3d(x, y, 0), self.color, self.size)
 

@@ -13,6 +13,7 @@ import uviewer
 
 from ellipsoid import ellipsoid
 from spiral    import spiral   
+from Vec3d     import Vec3d
 
 import uconfig
 
@@ -40,9 +41,11 @@ class Simulation:
                                       screen_height=win_height) 
 
         r = uconfig.opts["spiral-diameter"]/2
-        self.spiral = spiral(r, 3 * math.pi, 8)
+        self.spiral  = spiral(Vec3d(0,70,0), r, 3 * math.pi, 8)
+        self.spiral2 = spiral(Vec3d(-70,-70,0), 1.3*r, 3 * math.pi, 4)
         ns = uconfig.opts["spiral-numstars"]
-        self.spiral.calculate_stars(numstars=ns, starsizedist=sizes)
+        self.spiral. calculate_stars(numstars=ns, starsizedist=sizes)
+        self.spiral2.calculate_stars(numstars=ns, starsizedist=sizes)
 
         #self.ellipse_disc = ellipsoid(4, 40, 40) 
         #self.ellipse_disc.calculate_stars(numstars=2000)
@@ -117,6 +120,8 @@ class Simulation:
 
 
             self.spiral.displayXYZ(self.angleX, self.angleY, self.angleZ,
+                                    self.viewer, self.screen) 
+            self.spiral2.displayXYZ(self.angleX, self.angleY, self.angleZ,
                                     self.viewer, self.screen) 
             self.viewer.displayXYZ(0, 0, 0, self.viewer, self.screen) 
                                     

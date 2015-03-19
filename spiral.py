@@ -29,8 +29,9 @@ def sign(x):
 
 class spiral:
 
-    def __init__(self, r, alpha, arms=2):
+    def __init__(self, pos, r, alpha, arms=2):
 
+        self.pos   = pos
         self.r     = float(r)     # max radius of galaxy 
         self.alpha = float(alpha) # max angle of spiral
         self.arms  = arms         # number of arms
@@ -47,7 +48,7 @@ class spiral:
             sgfx = stargfx.stargfx()
             self.star_billboard = sgfx.generate_row((100, 100, 255))
 
-        self.axis = axis()
+        self.axis = axis(self.pos)
     
     def calculate_stars(self, numstars = 1000, starsizedist = [1]):
         """ Calculate random locations for stars within the spiral """
@@ -121,8 +122,8 @@ class spiral:
             # Rotate the point around X axis, then around Y axis, and finally around Z axis.
             s = star.rotateX(angleX).rotateY(angleY).rotateZ(angleZ)
             # Transform the point from 3D to 2D
-            p = s.project(screen.get_width(), screen.get_height(), 256,
-                          viewer)
+            p = s.project(screen.get_width(), screen.get_height(), 
+                          self.pos, 256, viewer)
             if not p:
                 continue
 
