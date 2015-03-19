@@ -61,6 +61,11 @@ class Simulation:
         label = self.font.render(string, 1, color) 
         self.screen.blit(label, (700, 10 + (17*row)))
 
+    def create_image(self):
+        #bufstr = pygame.image.tostring(self.screen, "RGBA" )
+        #image  = pygame.image.fromstring(bufstr,(1024,768),"RGBA")
+        print("saving image")
+        pygame.image.save(self.screen, "bob.jpg")
         
     def run(self):
         """ Main Loop """
@@ -83,6 +88,13 @@ class Simulation:
             self.clock.tick(50)
             self.screen.fill((0,0,0))
 
+            self.spiral.displayXYZ(self.angleX, self.angleY, self.angleZ,
+                                    self.viewer, self.screen) 
+            #self.spiral2.displayXYZ(self.angleX, self.angleY, self.angleZ,
+            #                        self.viewer, self.screen) 
+            self.viewer.displayXYZ(0, 0, 0, self.viewer, self.screen) 
+
+
             #  Simple key handler to move towards and away from the galazy
             #  using the "a" and "z" keys
 
@@ -101,6 +113,8 @@ class Simulation:
                 self.angleX -=1 
             elif keystate[K_a]:
                 self.angleY +=1 
+            elif keystate[K_c]:
+                self.create_image()
             elif keystate[K_s]:
                 self.angleY -=1 
             elif keystate[K_z]:
@@ -119,11 +133,6 @@ class Simulation:
                 pause = pause ^ 1 # toggle pause
 
 
-            self.spiral.displayXYZ(self.angleX, self.angleY, self.angleZ,
-                                    self.viewer, self.screen) 
-            #self.spiral2.displayXYZ(self.angleX, self.angleY, self.angleZ,
-            #                        self.viewer, self.screen) 
-            self.viewer.displayXYZ(0, 0, 0, self.viewer, self.screen) 
                                     
             #self.starfield.displayXYZ(self.angleX, self.angleY, self.angleZ,
             #                        self.viewer.position.x, self.viewer.position.y, self.viewer.position.z, self.screen) 
