@@ -1,5 +1,6 @@
 
 import argparse
+import math
 
 import Vec3d
 
@@ -16,7 +17,7 @@ opts_full = \
 
     "spiral-numstars" : 10000, # number of stars used to make up the
                               # spiral galaxy
-    "spiral-fuzz" : .15,  # entropy to throw at spiral galaxy 
+    "spiral-fuzz" : 0.2,  # entropy to throw at spiral galaxy 
     "spiral-diameter" : 500, # 
 
     "obj-axis-show" : 0, # show 3D axis with object
@@ -46,7 +47,7 @@ opts_realtime = \
 
     "spiral-numstars" : 4000, # number of stars used to make up the
                               # spiral galaxy
-    "spiral-fuzz" : .15,  # entropy to throw at spiral galaxy 
+    "spiral-fuzz" : 0.2,  # entropy to throw at spiral galaxy 
     "spiral-diameter" : 40, # 
 
     "obj-auto-rotate" : 0, # rotate the object 

@@ -70,39 +70,48 @@ class spiral:
     def generate_random_star(self):
 
         t = self.alpha * random.random()
+        zfrac = 0.5  # fraction of radius to scale for z direction
         
-        # s creates either side of the spiral
-        s = random.choice([-1,1]) 
-        t = abs(t)
+        if random.choice([0,1]):
 
-        r = self.r * math.sqrt(t)
-        x1 = s * r * math.cos(t)
-        y1 = s * r * math.sin(t)
+            # Generate a star in the sphere
+            theta = random.random() * 2.0*math.pi
+            phi   = random.random() * 2.0*math.pi
+            r  = random.random() *       self.r
+            rz = random.random() * zfrac*self.r
 
-        # create a sphere
-        theta = random.random() * 360.
-        phi   = random.random() * 360.
+            x = r  * math.cos(theta) * math.sin(phi)
+            y = r  * math.sin(theta) * math.sin(phi)
+            z = rz * math.cos(phi);
 
-        rho = self.r / 2. # radius of r should be smaller than spiral ...
-        x0 = rho * math.cos(theta) * math.sin(phi)
-        y0 = rho * math.sin(theta) * math.sin(phi)
-        z0 = rho * math.cos(phi);
+        else:
 
-        # combine spiral and sphere to create spiral galaxy
-        # with dense cloud at center
-        alpha   = (1. + math.cos(math.pi*r/(self.r)))/3.;
-        alpha_z = (1. + math.cos(math.pi*r/(self.r)))/3.;
+            # Generate a star in the spiral
+            # s creates either side of the spiral
+            s = random.choice([-1,1]) 
+            t = abs(t)
 
-        x = alpha * x0 + (1.-alpha) * x1;
-        y = alpha * y0 + (1.-alpha) * y1;
-        z = alpha_z * z0;
+            r = self.r * math.sqrt(t)
+            x1 = s * r * math.cos(t)
+            y1 = s * r * math.sin(t)
 
-        # introduce some random fuzz so it doesn't conform to a perfect
-        # spiral 
-        fuzz_factor = uconfig.opts["spiral-fuzz"] 
-        x = x + (random.random() * (x*fuzz_factor)) 
-        y = y + (random.random() * (y*fuzz_factor)) 
-        z = z + (random.random() * (z*fuzz_factor)) 
+            # # combine spiral and sphere to create spiral galaxy
+            # # with dense cloud at center
+            # alpha   = (1. + math.cos(math.pi*r/(self.r)))/3.;
+            # alpha_z = (1. + math.cos(math.pi*r/(self.r)))/3.;
+
+            x = x1;
+            y = y1;
+            #z0 = rho * math.cos(phi);
+            z = 0.0 # alpha_z * z0;
+
+            # introduce some random fuzz so it doesn't conform to a perfect
+            # spiral 
+            fuzz_factor = uconfig.opts["spiral-fuzz"] * self.r
+            x += random.gauss(0.0,       fuzz_factor)
+            y += random.gauss(0.0,       fuzz_factor)
+            z += random.gauss(0.0, zfrac*fuzz_factor)
+            #z = z + (random.random() * (z*fuzz_factor)) 
 
         starsize = random.choice(self.starsizedist)
 

@@ -21,7 +21,8 @@ class axis:
 
         self.show_coords = show_coords
 
-        self.font = pygame.font.SysFont("monospace", 15)
+        self.font = pygame.font.Font(None, 15)
+        #self.font = pygame.font.SysFont("monospace", 15)
 
         
     def displayXYZ(self, angleX, angleY, angleZ, viewer, screen):        
